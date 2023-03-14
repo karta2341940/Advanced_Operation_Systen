@@ -1,3 +1,10 @@
+/*
+Write a program that opens a file (with the open() system call)
+and then calls fork() to create a new process. Can both the child
+and parent access the file descriptor returned by open()? What
+happens when they are writing to the file concurrently, i.e., at the
+same time?
+*/
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,6 +12,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <alloca.h>
+#define bool int
+#define true 1
+#define false 0
 
 const char filename[] = "q2.txt";
 void err();
@@ -16,10 +26,9 @@ char *getTypeStr(char *type);
 char *readfile(char *type);
 int main()
 {
-    int file = open(filename, O_CREAT|O_EXCL, S_IRWXU);
-
-    printf("pid = %d,file = %d \n", getpid(), file);
-    close(file);
+    remove(filename);
+    printf("Program Start.\n");
+    
     int pid = fork();
 
     if (pid < 0)
@@ -28,38 +37,25 @@ int main()
     }
     else if (pid == 0)
     {
-        child();
+        if (!writeFile("Child"))
+        {
+            return 0;
+        }
+        if (!strcmp(readfile("Child"), ""))
+        {
+            return 0;
+        }
     }
     else
     {
-        parent();
-    }
-    wait(NULL);
-}
-
-int parent()
-{
-
-    if (!writeFile("Parent"))
-    {
-        return 0;
-    }
-    if (!strcmp(readfile("Parent"), ""))
-    {
-        return 0;
-    }
-}
-
-int child()
-{
-
-    if (!writeFile("Child"))
-    {
-        return 0;
-    }
-    if (!strcmp(readfile("Child"), ""))
-    {
-        return 0;
+        if (!writeFile("Parent"))
+        {
+            return 0;
+        }
+        if (!strcmp(readfile("Parent"), ""))
+        {
+            return 0;
+        }
     }
 }
 
@@ -68,11 +64,22 @@ void err()
     fprintf(stderr, "Oh my goodman, fork is fail\n");
     exit(1);
 }
-
-int openFile(char *type)
+/// @brief To open the file.
+/// @param type
+/// @param readable if true => read,false =>write
+/// @return
+int openFile(char *type, bool readable)
 {
-    printf("Opening the file in %s process. My PID = %d \n", type, (int)getpid());
-    int file_des = open(filename, O_RDWR|O_CREAT, S_IRWXU);
+    printf("(%s)Opening the file. The process. My PID = %d \n", type, (int)getpid());
+    int file_des = -1;
+    if (readable)
+    {
+        file_des = open(filename, O_RDONLY | O_CREAT, S_IRWXU);
+    }
+    else
+    {
+        file_des = open(filename, O_WRONLY | O_CREAT|O_APPEND , S_IRWXU);
+    }
     if (file_des < 0)
     {
         printf("(%s)File open error with open return %d\n", type, file_des);
@@ -84,16 +91,16 @@ int openFile(char *type)
 
 int writeFile(char *type)
 {
-    int file_des = openFile(type);
+    int file_des = openFile(type, false);
     if (file_des == -1)
     {
         return 0;
     }
-    printf("(%s)The file is writing.file_des is %d\n", type, file_des);
     char *str = getTypeStr(type);
     size_t strlength = strlen(str);
     ssize_t writeStatus = write(file_des, str, strlength);
 
+    printf("(%s)The file is writing. file_des is %d. And the writeStatus is %ld\n", type, file_des, writeStatus);
     if (writeStatus < 0)
     {
         printf("(%s)Writing fail.\n", type);
@@ -108,29 +115,31 @@ char *getTypeStr(char *type)
 {
     if (!strcmp("Child", type))
     {
-        return "I am Child.\n";
+        return "I am Child.\n\0";
     }
     else
     {
-        return "I am Parent.\n";
+        return "I am Parent.\n\0";
     }
 }
 
 char *readfile(char *type)
 {
-    int file_des = openFile(type);
+    
+    int file_des = openFile(type, true);
     if (file_des < 0)
         return "";
     printf("(%s)The file is on read. file_des = %d.\n", type, file_des);
     char buf[2048];
-    ssize_t readf = read(file_des, buf, 20);
+    ssize_t readf = read(file_des, buf, 23);
     if (readf < 0)
     {
-        printf("(%s)Read file fail", type);
+        printf("(%s)Read file fail\n", type);
         return "";
     }
-    printf("(%s)Reading finish.the content of q2.txt is \n-------\n%s\n-------\n", type,buf);
+    printf("(%s)Reading finish.the content of q2.txt is \n-------\n%s\n-------\n", type, buf);
     close(file_des);
-    printf("(%s)The file is closing.",type);
+    printf("(%s)The file is closing.\n", type);
+    
     return "";
 }
