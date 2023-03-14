@@ -5,31 +5,48 @@ You should try to ensure that the child process always prints first;
 can you do this without calling wait() in the parent?
 */
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <sys/wait.h>
+#include <signal.h>
 
-int proc(int);
+void proc(int);
 void err();
 void child();
 void parent();
-
-int main(int argc, char *argv[])
+/// @brief To handle the signal event
+/// @param sig 
+void signalHandler(int sig)
 {
+    sig=sig;
+    return ;
+}
+
+int main()
+{
+    /*
+        When child proc status has change. 
+        Signal sent to parent process, 
+        and call signalHandler to deal with the event.
+    */
+    signal(SIGCHLD, signalHandler);
     int rc = fork();
     proc(rc);
 }
-int proc(int rc)
+void proc(int rc)
 {
     if (rc < 0)
         err();
     if (rc)
+    {
+        pause();
         parent();
+    }
     else
+    {
         child();
+    }
 }
 void err()
 {
@@ -37,22 +54,11 @@ void err()
     return;
 }
 
-void parent(){
-
+void parent()
+{
+    printf("goodbye\n");
 }
-void child(){
-    
+void child()
+{
+    printf("hello\n");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

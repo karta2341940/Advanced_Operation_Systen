@@ -9,12 +9,14 @@ same time?
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <alloca.h>
 #define bool int
 #define true 1
 #define false 0
+
 
 const char filename[] = "q2.txt";
 void err();
