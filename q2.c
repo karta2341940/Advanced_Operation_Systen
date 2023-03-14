@@ -27,7 +27,7 @@ char *readfile(char *type);
 int main()
 {
     remove(filename);
-    printf("Program Start.\n");
+    printf("Program Start. pid = %d\n",getpid());
     
     int pid = fork();
 
