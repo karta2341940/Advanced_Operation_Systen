@@ -34,17 +34,24 @@ int main()
         err();
     if (!pid)
     {
+        printf("Hello Sub1\n");
         int pid2 = fork();
         if (pid2 < 0)
             err();
         if (!pid2)
         {
-            strcpy(content,"Hello from sub 2");
+            printf("Hello sub2\n");
+            strcpy(content,"(Child2)Hello from sub 2");
             write(p[1],content,50);
+            return ;
+        }
+        else {
+            
         }
         wait(NULL);
         char ct[50];
         read(p[0],ct,50);
+        printf("(Child1)%s\n",ct);
     }
     else
     {
