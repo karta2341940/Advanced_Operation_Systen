@@ -15,8 +15,7 @@ void err();
 void child();
 void parent();
 
-
-int main(int argc, char *argv[])
+int main()
 {
     int rc = fork();
     proc(rc);
@@ -28,11 +27,10 @@ void proc(int rc)
     if (rc)
     {
         parent();
-        wait(NULL);
     }
     else
     {
-        
+        child();
     }
 }
 void err()
@@ -42,13 +40,15 @@ void err()
 }
 void parent()
 {
-    printf("Parent\n");
+    printf("(Parent) My pid is %d\n", getpid());
+    int wait_value = wait(NULL);
+    printf("(Parent)The return value of wait is %d\n", wait_value);
+    printf("(Parent)So we can know wait function return the pid of child process.\n");
 }
-void child(char *argv[], int argc)
+void child()
 {
-   
+    printf("(Child) My pid is %d\n", getpid());
+    int wait_value = wait(NULL);
+    printf("(CHild)The return value of wait is %d\n", wait_value);
+    printf("\nAccording to the document of wait() said \n\"For errors, return (pid_t) -1\"\n so we can know use wait() in child process will occurs error \n if the child process doesn't have another child process.\n");
 }
-
-
-
-
