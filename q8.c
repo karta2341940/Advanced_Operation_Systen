@@ -14,8 +14,42 @@ pipe() system call.
 #include <sys/types.h>
 #include <fcntl.h>
 
+void err()
+{
+    fprintf(stderr, "Fork err");
+    exit(1);
+}
+
 int main()
 {
-    int pid1 = fork();
-    int pid2 = fork();
+    char content[50]="";
+    int p[2];
+    if (pipe(p) < 0)
+    {
+        perror("Pipe err");
+        exit(1);
+    }
+    int pid = fork();
+    if (pid < 0)
+        err();
+    if (!pid)
+    {
+        int pid2 = fork();
+        if (pid2 < 0)
+            err();
+        if (!pid2)
+        {
+            strcpy(content,"Hello from sub 2");
+            write(p[1],content,50);
+        }
+        wait(NULL);
+        char ct[50];
+        read(p[0],ct,50);
+    }
+    else
+    {
+        printf("This is parent\n");
+        wait(NULL);
+    }
+    return 1;
 }
