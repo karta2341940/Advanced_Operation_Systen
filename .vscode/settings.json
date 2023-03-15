@@ -1,7 +1,8 @@
 {
     "files.associations": {
         "syscall.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "string.h": "c"
     },
     "c-cpp-compile-run.should-show-notifications": false
 }
