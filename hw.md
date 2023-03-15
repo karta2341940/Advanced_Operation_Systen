@@ -63,9 +63,12 @@ If the pid is 0. that stand for the process is child process, then the process e
 
 If the pid more then 0, the program run line 25 to 29. To reassign x to 2 and print some message.Finaly wait for subprocess reutrn then program exit.
 
-In the execution result you can see the variable in child process is assign to 1 and the variable in parent process is assign to 2.
+- What value is the variable in the child process?
 
-If the both process child and parent change the variable, the variable will change by child first then change by parent if parent process has used wait function.
+> In the execution result you can see the variable in child process is assign to 1 and the variable in parent process is assign to 2.
+
+- What happens to the variable when both the child and parent change the value of x?
+> If the both process child and parent change the variable, the variable will change by child first then change by parent if parent process has used wait function.
 
 ## Q2
 Write a program that opens a file (with the open() system call)and then calls fork() to create a new process.
@@ -815,6 +818,5 @@ Hello Sub1
 Hello sub2
 (Child1)(Child2)Hello from sub 2
 ```
-
 
 
