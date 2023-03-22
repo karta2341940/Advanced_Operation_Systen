@@ -1,0 +1,156 @@
+\documentclass[10pt, answers]{exam} 
+%\documentclass[12pt, addpoints, answers]{exam} 
+%\addpoints
+%\noaddpoints
+%\answers
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings}
+%\lstset
+%{ %Formatting for code in appendix
+%    language=c,
+%    basicstyle=\footnotesize,
+%    numbers=left,
+%    stepnumber=1,
+%    showstringspaces=false,
+%    tabsize=1,
+%    breaklines=true,
+%    breakatwhitespace=false,
+%}
+
+\usepackage{courier}
+\lstset{
+    language=C,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+%    showstringspaces=false,
+%    tabsize=1,
+%   breaklines=true,
+    breakatwhitespace=false,    
+%    basicstyle=\footnotesize\ttfamily, % Default font
+    % numbers=left,              % Location of line numbers
+    numberstyle=\tiny,          % Style of line numbers
+    % stepnumber=2,              % Margin between line numbers
+    numbersep=5pt,              % Margin between line numbers and text
+%    tabsize=2,                  % Size of tabs
+    extendedchars=true,
+    breaklines=true,            % Lines will be wrapped
+%    keywordstyle=\color{red},
+    frame=b,
+    % keywordstyle=[1]\textbf,
+    % keywordstyle=[2]\textbf,
+    % keywordstyle=[3]\textbf,
+    % keywordstyle=[4]\textbf,   \sqrt{\sqrt{}}
+%    stringstyle=\color{white}\ttfamily, % Color of strings
+    stringstyle=\ttfamily, % Color of strings
+    showspaces=false,
+    showtabs=false,
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    framexrightmargin=5pt,
+    framexbottommargin=4pt,
+    % backgroundcolor=\color{lightgray},
+    showstringspaces=true
+}
+%%%\lstloadlanguages{ % Check documentation for further languages ...
+%%%     % [Visual]Basic,
+%%%     % Pascal,
+%%%     C,
+%%%     C++,
+%%%     % XML,
+%%%     % HTML,
+%%%     Java
+%%%}
+% \DeclareCaptionFont{blue}{\color{blue}} 
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+
+
+
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{multirow}
+
+
+\newcommand{\coursename}{Advanced Operating Systems}
+\newcommand{\semester}{Spring 2023}
+\newcommand{\hwtitle}{HW\#2}
+\newcommand{\studentname}{MengXian,Du}
+\newcommand{\studentID}{CBB108047}
+
+\newcommand{\answer}{\\~\textbf{Answer:}\space}
+
+\pagestyle{head} 
+\pagestyle{headandfoot}
+\extraheadheight{1in}
+\firstpageheader{}
+{\begin{large}\hwtitle \\
+\coursename, \semester\end{large}\\~\\
+\studentname\space(\studentID)\\
+Department of Computer Science and Information Engineering\\
+National Pingtung University}
+{}
+%\runningheadrule 
+%\runningheader{}{}{}
+\setlength\answerlinelength{2in}
+\unframedsolutions
+
+\begin{document}
+%\noindent This homework is from Chapter 5 of OSTEP.
+
+\begin{questions} 
+\setcounter{question}{0} 
+
+\question 
+You have to write C programs for measuring the costs of any 3 system
+calls and the context switch.
+
+\begin{solution}
+Please refer to List 1 (hw2.c):
+
+\lstinputlisting[label=code-hw2.c, caption=hw2.c]{hw2.c}
+
+Its execution results are as follows:
+
+\begin{lstlisting}[language=bash]
+    ----------Measure Start1------------
+    Cycle : 1411425 
+    Second: 0.006721s
+    Nano Second: 672107.142857ns
+    ----------Measure Start2------------
+    My pid is 6189.
+    Cycle : 167688 
+    Second: 0.000799s
+    Nano Second: 79851.428571ns
+    ----------Measure Start3------------
+            --ls result--
+    
+    hw2.c  makefile  output
+    
+    
+            --ls result--
+    Cycle : 12025222 
+    Second: 0.057263s
+    Nano Second: 5726296.190476ns
+\end{lstlisting}
+
+Here we can see the result have 3 Measure.
+One is to call open and read and it cost 0.006721s in my computer.
+The second is to call getpid and it cost 0.000799s in my computer.
+The third is to call ls and it cost 0.057263s in my computer.
+
+
+\end{solution}
+
+
+
+\end{questions}
+
+
+\end{document}
