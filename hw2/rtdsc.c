@@ -11,7 +11,16 @@ uint64_t rdtsc()
                          : "=a"(lo), "=d"(hi)); // low32-bit store in EAX register，high32-bit store in EDX register
     return ((uint64_t)hi << 32) | lo;
 }
-double
+uint64_t start(int a){
+    uint64_t starTime;
+    starTime = rdtsc();
+    
+
+}
+double endTIme(){
+    
+}
+
 
 int main()
 {
