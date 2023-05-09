@@ -1,0 +1,142 @@
+\documentclass[10pt, answers]{exam} 
+%\documentclass[12pt, addpoints, answers]{exam} 
+%\addpoints
+%\noaddpoints
+%\answers
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{listings}
+%\lstset
+%{ %Formatting for code in appendix
+%    language=c,
+%    basicstyle=\footnotesize,
+%    numbers=left,
+%    stepnumber=1,
+%    showstringspaces=false,
+%    tabsize=1,
+%    breaklines=true,
+%    breakatwhitespace=false,
+%}
+
+\usepackage{courier}
+\lstset{
+    language=C,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+%    showstringspaces=false,
+%    tabsize=1,
+%   breaklines=true,
+    breakatwhitespace=false,    
+%    basicstyle=\footnotesize\ttfamily, % Default font
+    % numbers=left,              % Location of line numbers
+    numberstyle=\tiny,          % Style of line numbers
+    % stepnumber=2,              % Margin between line numbers
+    numbersep=5pt,              % Margin between line numbers and text
+%    tabsize=2,                  % Size of tabs
+    extendedchars=true,
+    breaklines=true,            % Lines will be wrapped
+%    keywordstyle=\color{red},
+    frame=b,
+    % keywordstyle=[1]\textbf,
+    % keywordstyle=[2]\textbf,
+    % keywordstyle=[3]\textbf,
+    % keywordstyle=[4]\textbf,   \sqrt{\sqrt{}}
+%    stringstyle=\color{white}\ttfamily, % Color of strings
+    stringstyle=\ttfamily, % Color of strings
+    showspaces=false,
+    showtabs=false,
+    xleftmargin=17pt,
+    framexleftmargin=17pt,
+    framexrightmargin=5pt,
+    framexbottommargin=4pt,
+    % backgroundcolor=\color{lightgray},
+    showstringspaces=true
+}
+%%%\lstloadlanguages{ % Check documentation for further languages ...
+%%%     % [Visual]Basic,
+%%%     % Pascal,
+%%%     C,
+%%%     C++,
+%%%     % XML,
+%%%     % HTML,
+%%%     Java
+%%%}
+% \DeclareCaptionFont{blue}{\color{blue}} 
+
+% \captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+
+
+
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{multirow}
+
+
+\newcommand{\coursename}{Advanced Operating Systems}
+\newcommand{\semester}{Spring 2023}
+\newcommand{\hwtitle}{HW\#3}
+\newcommand{\studentname}{MengXian,Du}
+\newcommand{\studentID}{CBB108047}
+
+\newcommand{\answer}{\\~\textbf{Answer:}\space}
+
+\pagestyle{head} 
+\pagestyle{headandfoot}
+\extraheadheight{1in}
+\firstpageheader{}
+{\begin{large}\hwtitle \\
+\coursename, \semester\end{large}\\~\\
+\studentname\space(\studentID)\\
+Department of Computer Science and Information Engineering\\
+National Pingtung University}
+{}
+%\runningheadrule 
+%\runningheader{}{}{}
+\setlength\answerlinelength{2in}
+\unframedsolutions
+
+\begin{document}
+%\noindent This homework is from Chapter 5 of OSTEP.
+
+\begin{questions} 
+\setcounter{question}{0} 
+
+\question 
+First, write a simple program called null.c that creates a pointer
+to an integer, sets it to NULL, and then tries to dereference it.
+Compile this into an executable called null. What happens when you
+run this program?
+
+\begin{solution}
+Please refer to List 1 (null.c):
+
+\lstinputlisting[label=code-null.c, caption=null.c]{../null.c}
+
+Its execution results are as follows:
+
+\begin{lstlisting}[language=bash]
+Start
+Segmentation fault (core dumped)
+\end{lstlisting}
+
+As we can see the program is terminated with a segmentation fault.
+
+So we know that if a variable doesn't allocated memory space,
+it will cause a segmentation fault when it is dereferenced.
+
+But if we need to reference it.
+It's ok to reference it.
+\end{solution}
+
+
+
+\end{questions}
+
+
+\end{document}
