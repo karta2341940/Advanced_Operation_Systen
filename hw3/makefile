@@ -6,7 +6,7 @@ clean:
 q1: null.c
 	gcc -o null null.c
 	./null
-	
+
 q2: null.c
 	gcc -g null.c -o null
 	gdb null
@@ -23,4 +23,7 @@ q6: q6.c
 
 q7: q7.c
 	gcc -o q7 q7.c
-	
+
+q8: q8.c
+	gcc -o q8 q8.c
+	./q8

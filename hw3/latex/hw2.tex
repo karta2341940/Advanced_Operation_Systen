@@ -572,6 +572,110 @@ data[0] = 1
     
     \end{questions}
 
+%8
+\begin{questions} 
+    \setcounter{question}{7} 
+    
+    \question 
+    Try out some of the other interfaces to memory allocation. For example, create a simple vector-like data structure and related routines that use realloc() to manage the vector. Use an array to
+    store the vectors elements; when a user adds an entry to the vector, use realloc() to allocate more space for it. How well does
+    such a vector perform? How does it compare to a linked list? Use
+    valgrind to help you find bugs.
 
+
+    
+    \begin{solution}
+    Please refer to List 1 (q8.c):
+    
+    \lstinputlisting[label=code-q8.c, caption=q8.c]{../q8.c}
+    
+    Its execution results are as follows:
+    
+    \begin{lstlisting}[language=bash]
+Linked List: 1
+Linked List: 1 2
+Linked List: 1 2 3
+Linked List: 1 2
+Linked List: 1
+size: 1, capacity: 1 => The Value in vector are 1
+size: 2, capacity: 2 => The Value in vector are 1 2
+size: 3, capacity: 4 => The Value in vector are 1 2 3
+size: 3, capacity: 4 => The Value in vector are 1790712579 21891 -529391540
+    \end{lstlisting}
+    
+    Valgrind's execution results are as follows:
+    
+    \begin{lstlisting}[language=bash]
+==31906== Conditional jump or move depends on uninitialised value(s)
+==31906==    at 0x10942C: llshow (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==    by 0x109537: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==
+Linked List: 1
+==31906== Conditional jump or move depends on uninitialised value(s)
+==31906==    at 0x10946F: llpush (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==    by 0x109548: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==
+Linked List: 1 2
+Linked List: 1 2 3
+Linked List: 1 2
+Linked List: 1
+size: 1, capacity: 1 => The Value in vector are 1
+size: 2, capacity: 2 => The Value in vector are 1 2
+size: 3, capacity: 4 => The Value in vector are 1 2 3
+==31906== Invalid read of size 4
+==31906==    at 0x109381: vshow (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==    by 0x10961C: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==  Address 0x4a96610 is 0 bytes inside a block of size 16 free'd
+==31906==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31906==    by 0x10932D: vclear (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==    by 0x109610: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==  Block was alloc'd at
+==31906==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31906==    by 0x1092D7: vpush (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==    by 0x1095F8: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==
+size: 3, capacity: 4 => The Value in vector are 1 2 3
+==31906==
+==31906== HEAP SUMMARY:
+==31906==     in use at exit: 16 bytes in 1 blocks
+==31906==   total heap usage: 7 allocs, 6 frees, 1,100 bytes allocated
+==31906==
+==31906== 16 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==31906==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==31906==    by 0x10951D: main (in /home/it/Desktop/Advanced_Operation_Systen/hw3/q8)
+==31906==
+==31906== LEAK SUMMARY:
+==31906==    definitely lost: 16 bytes in 1 blocks
+==31906==    indirectly lost: 0 bytes in 0 blocks
+==31906==      possibly lost: 0 bytes in 0 blocks
+==31906==    still reachable: 0 bytes in 0 blocks
+==31906==         suppressed: 0 bytes in 0 blocks
+==31906==
+==31906== Use --track-origins=yes to see where uninitialised values come from
+==31906== For lists of detected and suppressed errors, rerun with: -s
+==31906== ERROR SUMMARY: 6 errors from 4 contexts (suppressed: 0 from 0)
+    \end{lstlisting}
+    
+    1. How well does such a vector perform?
+    
+    Ans : It's perform I is very well, It easy to use and clear to know.
+    This is a good way to store data.
+
+    2. How does it compare to a linked list?
+
+    Ans : It compare to linked list is faster then linked list.
+    If we need to add a new element to the end of vector and linked list,
+    the vector is faster than linked list.
+    Becaues of linked list need to find the last element of linked list,
+    but the vector just need to add the new element to the end of vector.
+    and it has stored the size and capacity of vector.
+
+    3. Use valgrind to help you find bugs
+
+    \end{solution}
+    
+    
+    
+    \end{questions}
 
 \end{document}
